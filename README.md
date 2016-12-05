@@ -29,4 +29,33 @@
          ... (in Router block)
          <Route path="/products" component={Products} />
 
-*
+* Create components/ProductList.js (insert code block)
+* Create a model models/products.js (insert code block)
+* require it in index.js
+* Connect model and component "dva provides a connect method. If you are familiar with redux, this connect is from react-router."
+* Edit routes/Products.js and replace with following code
+      import React from 'react';
+      import { connect } from 'dva';
+      import ProductList from '../components/ProductList';
+
+      const Products = ({ dispatch, products }) => {
+      function handleDelete(id) {
+      dispatch({
+      type: 'products/delete',
+      payload: id,
+      });
+      }
+      return (
+      <div>
+      <h2>List of Products</h2>
+      <ProductList onDelete={handleDelete} products={products} />
+      </div>
+      );
+      };
+
+      // export default Products;
+      export default connect(({ products }) => ({
+      products,
+      }))(Products);
+
+* Edit routes/Products.js
